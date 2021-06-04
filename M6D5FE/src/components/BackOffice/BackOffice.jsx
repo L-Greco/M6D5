@@ -13,9 +13,38 @@ class BackOffice extends Component {
     isLoading: false,
   };
 
-  submitHandler = (e) => {
+  submitHandler = async (e) => {
     e.preventDefault();
     console.log(this.state.product);
+    try {
+      let response = await fetch("http://localhost:3001/products", {
+        method: "POST",
+        body: JSON.stringify(this.state.product),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // now response holds the result of my operation
+      // the ok property of it will tell me if everything went well or not
+      if (response.ok) {
+        alert("your product has been saved correctly");
+        // this.setState({
+        //     product: {
+        //         name: '',
+        //         brand: '',
+        //         category: 1,
+        //         imgUrl: "",
+        //         price: '',
+        //         description: ''
+        //     }
+        // })
+      } else {
+        alert(response.statusText);
+        alert("something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleChange = (e) => {

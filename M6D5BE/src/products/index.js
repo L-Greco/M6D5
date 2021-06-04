@@ -28,7 +28,7 @@ productsRouter.post("/", async (req, res, next) => {
 
 productsRouter.get("/", async (req, res, next) => {
     try {
-        const products = await ProductModel.find()
+        const products = await ProductModel.find().populate("comments")
         res.send(products)
 
     } catch (error) {
